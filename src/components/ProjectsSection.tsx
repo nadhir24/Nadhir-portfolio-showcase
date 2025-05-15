@@ -12,7 +12,7 @@ const ProjectsSection = () => {
       image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80",
       tech: ["React", "Node.js", "Express", "MongoDB"],
       liveUrl: "https://ranocake.vercel.app",
-      githubUrl: "https://github.com/yourusername/ranocake"
+      githubUrl: "https://github.com/nadhir24/ranocake"
     }
   ];
 
@@ -96,7 +96,7 @@ const ProjectsSection = () => {
       <div className="flex justify-center mt-16">
         <Button className="btn">
           <a 
-            href="https://github.com/yourusername"
+            href="https://github.com/nadhir24"
             target="_blank" 
             rel="noopener noreferrer"
             className="flex items-center gap-2"
