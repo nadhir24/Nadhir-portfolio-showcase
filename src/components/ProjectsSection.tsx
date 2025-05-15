@@ -10,7 +10,7 @@ const ProjectsSection = () => {
       title: "Ranocake",
       description: "A modern web application for a cake shop business. Features include product catalog, online ordering, and customer reviews. Built with a responsive design that looks great on all devices.",
       image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80",
-      tech: ["React", "Node.js", "Express", "MongoDB"],
+      tech: ["Next.js", "Nest.js", "PostgreSQL", "Postman"],
       liveUrl: "https://ranocake.vercel.app",
       githubUrl: "https://github.com/nadhir24/ranocake"
     }

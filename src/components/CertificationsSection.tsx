@@ -11,7 +11,7 @@ const CertificationsSection = () => {
       issuer: "Code X Academy",
       issueDate: "May 2023",
       credentialId: "23/ACD/IV/2/0026",
-      url: "#",
+      url: "https://drive.google.com/file/d/1TmxXEG6Yr4FAvSqxAh5maA3CmOMj5Jj9/view",
       skills: ["Node.js"]
     },
     {
