@@ -1,0 +1,103 @@
+
+import React, { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Award, ExternalLink } from "lucide-react";
+
+const CertificationsSection = () => {
+  const certifications = [
+    {
+      title: "Belajar Dasar-Dasar DevOps",
+      issuer: "Dicoding Indonesia",
+      issueDate: "Nov 2022",
+      credentialId: "0LZ0GGQ63X65",
+      skills: []
+    },
+    {
+      title: "Belajar Dasar Pemrograman JavaScript",
+      issuer: "Dicoding Indonesia",
+      issueDate: "Oct 2022",
+      expirationDate: "Oct 2025",
+      credentialId: "JLX1L3JYJX72",
+      skills: []
+    },
+    {
+      title: "Kursus HTML & CSS",
+      issuer: "Progate",
+      issueDate: "Oct 2022",
+      skills: ["Web Development"]
+    },
+    {
+      title: "Kursus Javascript",
+      issuer: "Progate",
+      issueDate: "Oct 2022",
+      skills: ["Web Development"]
+    },
+    {
+      title: "Competence Sertificate",
+      issuer: "Badan Nasional Sertifikasi Profesi (BNSP)",
+      issueDate: "Sep 2022",
+      expirationDate: "Sep 2025",
+      credentialId: "TIK.705.03230.2022",
+      skills: []
+    },
+  ];
+
+  return (
+    <section id="certifications" className="section-padding">
+      <h2 className="numbered-heading">Certifications</h2>
+      
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {certifications.map((cert, index) => (
+          <Card 
+            key={index} 
+            className="bg-portfolio-light-navy border-none shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl group"
+          >
+            <CardHeader className="pb-2">
+              <div className="flex justify-between items-start">
+                <div className="text-portfolio-teal">
+                  <Award className="w-8 h-8" />
+                </div>
+                <a 
+                  href="#" 
+                  className="text-portfolio-lightest-slate opacity-0 group-hover:opacity-100 transition-opacity"
+                  aria-label="View Credential"
+                >
+                  <ExternalLink className="w-5 h-5" />
+                </a>
+              </div>
+              <CardTitle className="text-portfolio-lightest-slate text-xl mt-2">{cert.title}</CardTitle>
+              <CardDescription className="text-portfolio-light-slate">{cert.issuer}</CardDescription>
+            </CardHeader>
+            
+            <CardContent>
+              <div className="mb-2">
+                <span className="text-sm text-portfolio-slate">
+                  {cert.issueDate} {cert.expirationDate && `· Expires ${cert.expirationDate}`}
+                </span>
+              </div>
+              
+              {cert.credentialId && (
+                <p className="text-sm font-mono text-portfolio-teal mb-3">
+                  Credential ID: {cert.credentialId}
+                </p>
+              )}
+              
+              {cert.skills && cert.skills.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {cert.skills.map((skill, i) => (
+                    <Badge key={i} className="bg-portfolio-teal/20 text-portfolio-teal hover:bg-portfolio-teal/30 border-none">
+                      {skill}
+                    </Badge>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default CertificationsSection;
