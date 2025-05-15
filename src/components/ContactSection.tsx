@@ -1,11 +1,83 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Github, Linkedin, Send } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 const ContactSection = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate the form
+    if (!formData.name || !formData.email || !formData.message) {
+      toast({
+        title: "Error",
+        description: "Please fill out all required fields.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Simple email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast({
+        title: "Error",
+        description: "Please enter a valid email address.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Since we don't have a backend yet, we'll just simulate a successful submission
+      // In a real app, you'd send this to your server or email service
+      
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Show success message
+      toast({
+        title: "Message sent!",
+        description: "Thank you for your message. I'll get back to you soon!",
+      });
+      
+      // Reset the form
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: ""
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again later.",
+        variant: "destructive"
+      });
+      console.error("Error sending message:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section id="contact" className="section-padding">
       <h2 className="numbered-heading">Get In Touch</h2>
@@ -18,14 +90,14 @@ const ContactSection = () => {
         
         <div className="flex justify-center gap-6 mb-12">
           <a 
-            href="mailto:nadhir.example@gmail.com" 
+            href="mailto:nadhirghassanwork@gmail.com" 
             className="text-portfolio-lightest-slate hover:text-portfolio-teal transition-colors"
             aria-label="Email"
           >
             <Mail className="w-6 h-6" />
           </a>
           <a 
-            href="https://github.com/yourusername" 
+            href="https://github.com/nadhir24" 
             target="_blank" 
             rel="noopener noreferrer"
             className="text-portfolio-lightest-slate hover:text-portfolio-teal transition-colors"
@@ -34,7 +106,7 @@ const ContactSection = () => {
             <Github className="w-6 h-6" />
           </a>
           <a 
-            href="https://linkedin.com/in/yourusername" 
+            href="https://www.linkedin.com/in/nadhir-ghassan24" 
             target="_blank" 
             rel="noopener noreferrer"
             className="text-portfolio-lightest-slate hover:text-portfolio-teal transition-colors"
@@ -44,28 +116,34 @@ const ContactSection = () => {
           </a>
         </div>
         
-        <form className="space-y-4 text-left">
-          <div className="grid grid-cols-2 gap-4">
+        <form className="space-y-4 text-left" onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="name" className="text-portfolio-lightest-slate block mb-1 text-sm">
-                Name
+                Name*
               </label>
               <Input 
                 id="name" 
                 type="text" 
                 className="bg-portfolio-lightest-navy border-portfolio-lightest-navy focus:border-portfolio-teal text-portfolio-lightest-slate"
                 placeholder="Your name"
+                value={formData.name}
+                onChange={handleChange}
+                required
               />
             </div>
             <div>
               <label htmlFor="email" className="text-portfolio-lightest-slate block mb-1 text-sm">
-                Email
+                Email*
               </label>
               <Input 
                 id="email" 
                 type="email" 
                 className="bg-portfolio-lightest-navy border-portfolio-lightest-navy focus:border-portfolio-teal text-portfolio-lightest-slate"
                 placeholder="your@email.com"
+                value={formData.email}
+                onChange={handleChange}
+                required
               />
             </div>
           </div>
@@ -79,18 +157,23 @@ const ContactSection = () => {
               type="text" 
               className="bg-portfolio-lightest-navy border-portfolio-lightest-navy focus:border-portfolio-teal text-portfolio-lightest-slate"
               placeholder="How can I help you?"
+              value={formData.subject}
+              onChange={handleChange}
             />
           </div>
           
           <div>
             <label htmlFor="message" className="text-portfolio-lightest-slate block mb-1 text-sm">
-              Message
+              Message*
             </label>
             <Textarea
               id="message"
               rows={5}
               className="bg-portfolio-lightest-navy border-portfolio-lightest-navy focus:border-portfolio-teal text-portfolio-lightest-slate resize-none"
               placeholder="Your message here..."
+              value={formData.message}
+              onChange={handleChange}
+              required
             />
           </div>
           
@@ -98,8 +181,9 @@ const ContactSection = () => {
             <Button 
               type="submit" 
               className="bg-transparent border border-portfolio-teal text-portfolio-teal hover:bg-portfolio-teal/10 transition-all duration-300 flex items-center gap-2"
+              disabled={isSubmitting}
             >
-              Send Message <Send className="w-4 h-4" />
+              {isSubmitting ? 'Sending...' : 'Send Message'} <Send className="w-4 h-4" />
             </Button>
           </div>
         </form>
