@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -64,24 +63,26 @@ const ParallaxEffect = () => {
 
     // Added: SVG path animations for existing SVGs in the document
     document.querySelectorAll('.svg-animate path').forEach((path, i) => {
-      const length = (path as SVGPathElement).getTotalLength();
-      
-      gsap.set(path, {
-        strokeDasharray: length,
-        strokeDashoffset: length
-      });
-      
-      gsap.to(path, {
-        strokeDashoffset: 0,
-        duration: 1.5,
-        delay: i * 0.2,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: path,
-          start: "top 80%",
-          toggleActions: "play none none reset"
-        }
-      });
+      if (path instanceof SVGPathElement) {
+        const length = path.getTotalLength();
+        
+        gsap.set(path, {
+          strokeDasharray: length,
+          strokeDashoffset: length
+        });
+        
+        gsap.to(path, {
+          strokeDashoffset: 0,
+          duration: 1.5,
+          delay: i * 0.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: path,
+            start: "top 80%",
+            toggleActions: "play none none reset"
+          }
+        });
+      }
     });
 
     return () => {

@@ -20,26 +20,34 @@ const AnimatedSvgPath: React.FC<AnimatedSvgPathProps> = ({ className }) => {
     const paths = svgRef.current.querySelectorAll("path");
     
     // Set initial state (paths invisible)
-    gsap.set(paths, { 
-      strokeDasharray: path => path.getTotalLength(),
-      strokeDashoffset: path => path.getTotalLength(),
-      opacity: 0
+    paths.forEach((path) => {
+      // We need to ensure we're working with SVGPathElement objects
+      if (path instanceof SVGPathElement) {
+        const length = path.getTotalLength();
+        gsap.set(path, { 
+          strokeDasharray: length,
+          strokeDashoffset: length,
+          opacity: 0
+        });
+      }
     });
 
     // Create animation for each path
     paths.forEach((path, index) => {
-      gsap.to(path, {
-        strokeDashoffset: 0,
-        opacity: 1,
-        duration: 1.5,
-        delay: index * 0.2,
-        ease: "power2.inOut",
-        scrollTrigger: {
-          trigger: svgRef.current,
-          start: "top 75%",
-          toggleActions: "play none none reset"
-        }
-      });
+      if (path instanceof SVGPathElement) {
+        gsap.to(path, {
+          strokeDashoffset: 0,
+          opacity: 1,
+          duration: 1.5,
+          delay: index * 0.2,
+          ease: "power2.inOut",
+          scrollTrigger: {
+            trigger: svgRef.current,
+            start: "top 75%",
+            toggleActions: "play none none reset"
+          }
+        });
+      }
     });
     
     return () => {
