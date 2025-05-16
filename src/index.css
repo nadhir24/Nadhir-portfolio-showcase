@@ -82,8 +82,30 @@
   .btn {
     @apply px-6 py-3 rounded border border-portfolio-teal text-portfolio-teal hover:bg-portfolio-teal/10 transition-all duration-300 text-sm font-medium;
   }
+  
+  /* GSAP and Parallax related classes */
+  .section-parallax {
+    @apply relative;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .animate-on-scroll {
+    opacity: 0;
+  }
+  
+  section.active .animate-on-scroll {
+    opacity: 1;
+  }
+  
+  .parallax-bg {
+    @apply absolute inset-0 z-0 pointer-events-none opacity-10;
+    background-size: cover;
+    transform: translateZ(-10px) scale(2);
+  }
 }
 
 body {
   counter-reset: section;
 }
+
