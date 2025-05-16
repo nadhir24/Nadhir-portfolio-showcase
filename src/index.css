@@ -103,9 +103,41 @@
     background-size: cover;
     transform: translateZ(-10px) scale(2);
   }
+  
+  /* Added: SVG animation classes */
+  .svg-path-animation {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: dash 2s linear forwards;
+  }
+  
+  @keyframes dash {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  .svg-draw {
+    animation: svg-draw 2s forwards;
+    animation-timing-function: ease-in-out;
+  }
+  
+  @keyframes svg-draw {
+    0% {
+      stroke-dashoffset: 1000;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  /* Added: Section divider animation */
+  .section-divider {
+    position: relative;
+    overflow: hidden;
+  }
 }
 
 body {
   counter-reset: section;
 }
-

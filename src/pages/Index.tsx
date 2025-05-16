@@ -8,6 +8,7 @@ import EducationSection from "@/components/EducationSection";
 import CertificationsSection from "@/components/CertificationsSection";
 import ContactSection from "@/components/ContactSection";
 import ParallaxEffect from "@/components/ParallaxEffect";
+import AnimatedSvgPath from "@/components/AnimatedSvgPath";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -40,6 +41,25 @@ const Index = () => {
       });
     });
     
+    // Added: Scroll-triggered section divider SVG animations
+    gsap.utils.toArray('.section-divider').forEach((divider: any) => {
+      gsap.fromTo(divider, 
+        { 
+          width: "0%" 
+        },
+        { 
+          width: "100%",
+          duration: 1.5,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: divider,
+            start: "top 90%",
+            toggleActions: "play none none reset"
+          }
+        }
+      );
+    });
+    
     return () => {
       // Clean up all scroll triggers
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
@@ -53,10 +73,31 @@ const Index = () => {
       
       <main className="relative z-10">
         <HeroSection />
+        
+        <div className="section-divider h-px bg-portfolio-teal/30 max-w-md mx-auto my-12"></div>
+        
         <AboutSection />
+        
+        {/* Added: Decorative SVG between sections */}
+        <div className="flex justify-center my-16">
+          <AnimatedSvgPath className="w-24 h-24 opacity-70" />
+        </div>
+        
         <ProjectsSection />
+        
+        <div className="section-divider h-px bg-portfolio-teal/30 max-w-md mx-auto my-12"></div>
+        
         <EducationSection />
+        
+        {/* Added: Another instance of SVG with different placement */}
+        <div className="flex justify-end mr-12 my-16">
+          <AnimatedSvgPath className="w-16 h-16 opacity-50" />
+        </div>
+        
         <CertificationsSection />
+        
+        <div className="section-divider h-px bg-portfolio-teal/30 max-w-md mx-auto my-12"></div>
+        
         <ContactSection />
       </main>
       
