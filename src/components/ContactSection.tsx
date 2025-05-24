@@ -190,10 +190,10 @@ const ContactSection = () => {
             />
           </div>
 
-          <div className="text-center">
+          <div className="pt-2">
             <Button
               type="submit"
-              className="bg-transparent border border-portfolio-teal text-portfolio-teal hover:bg-portfolio-teal/10 transition-all duration-300 flex items-center gap-2"
+              className="w-full bg-transparent border border-portfolio-teal text-portfolio-teal hover:bg-portfolio-teal/10 transition-all duration-300 flex items-center justify-center gap-2"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Sending..." : "Send Message"}{" "}
