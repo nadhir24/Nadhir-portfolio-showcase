@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,6 +13,22 @@ const ProjectsSection = () => {
       tech: ["Next.js", "Nest.js", "PostgreSQL", "Postman"],
       liveUrl: "https://ranocake.vercel.app",
       githubUrl: "https://github.com/nadhir24/ranocake"
+    },
+    {
+      title: "Hotel Realta - Backend",
+      description: "Backend system for Hotel Realta management application developed during Code X Academy. I was responsible for the users module, handling user authentication, profile management, and user-related functionalities.",
+      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+      tech: ["Node.js", "Express.js", "PostgreSQL", "JWT"],
+      liveUrl: "#",
+      githubUrl: "https://github.com/VierryFadhilah/hotel-realta-back-end"
+    },
+    {
+      title: "Hotel Realta - Frontend",
+      description: "Frontend application for Hotel Realta management system developed during Code X Academy. I contributed to the users interface, implementing user registration, login, profile management, and user dashboard features.",
+      image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=800&q=80",
+      tech: ["React.js", "TypeScript", "Tailwind CSS", "Axios"],
+      liveUrl: "#",
+      githubUrl: "https://github.com/Fal-hi/hotel-realta-front-end"
     }
   ];
 
@@ -28,7 +45,7 @@ const ProjectsSection = () => {
             {/* Project Image */}
             <div className={`md:col-span-7 ${index % 2 === 0 ? 'md:col-start-1' : 'md:col-start-6 md:order-2'}`}>
               <a 
-                href={project.liveUrl} 
+                href={project.liveUrl !== "#" ? project.liveUrl : project.githubUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="block relative rounded overflow-hidden group"
@@ -77,15 +94,17 @@ const ProjectsSection = () => {
                 >
                   <Github className="w-5 h-5" />
                 </a>
-                <a 
-                  href={project.liveUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-portfolio-lightest-slate hover:text-portfolio-teal transition-colors"
-                  aria-label="Live Preview"
-                >
-                  <ExternalLink className="w-5 h-5" />
-                </a>
+                {project.liveUrl !== "#" && (
+                  <a 
+                    href={project.liveUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-portfolio-lightest-slate hover:text-portfolio-teal transition-colors"
+                    aria-label="Live Preview"
+                  >
+                    <ExternalLink className="w-5 h-5" />
+                  </a>
+                )}
               </div>
             </div>
           </div>
