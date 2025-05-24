@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -78,15 +77,13 @@ const Navbar = () => {
               </li>
             ))}
           </ol>
-          <a 
-            href="/Nadhir_Ghassan_Resume.pdf"
+          <a
+            href="public\Nadhir Ghassan-resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="ml-4"
           >
-            <Button 
-              className="bg-transparent border border-portfolio-teal text-portfolio-teal hover:bg-portfolio-teal/10"
-            >
+            <Button className="bg-transparent border border-portfolio-teal text-portfolio-teal hover:bg-portfolio-teal/10">
               Resume
             </Button>
           </a>
@@ -109,15 +106,13 @@ const Navbar = () => {
                   {link.name}
                 </a>
               ))}
-              <a 
+              <a
                 href="/Nadhir_Ghassan_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4"
               >
-                <Button 
-                  className="bg-transparent border border-portfolio-teal text-portfolio-teal hover:bg-portfolio-teal/10"
-                >
+                <Button className="bg-transparent border border-portfolio-teal text-portfolio-teal hover:bg-portfolio-teal/10">
                   Resume
                 </Button>
               </a>
