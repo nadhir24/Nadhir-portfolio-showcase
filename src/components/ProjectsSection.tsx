@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,6 +13,14 @@ const ProjectsSection = () => {
       tech: ["Next.js", "Nest.js", "PostgreSQL", "Postman"],
       liveUrl: "https://ranocake.vercel.app",
       githubUrl: "https://github.com/nadhir24/ranocake"
+    },
+    {
+      title: "62teknologi Technical Test",
+      description: "Full-stack application integrating Yelp API for business listings and reviews. Demonstrates advanced API integration, data processing, and modern web development practices. Built as a technical assessment showcasing comprehensive development skills.",
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80",
+      tech: ["Next.js", "Nest.js", "PostgreSQL", "Yelp API", "Postman"],
+      liveUrl: "#",
+      githubUrl: "https://github.com/nadhir24/62teknologi-backend-test--nadhir-ghassan-"
     },
     {
       title: "Hotel Realta Management System",
