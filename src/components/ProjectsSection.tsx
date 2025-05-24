@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,7 +8,7 @@ const ProjectsSection = () => {
     {
       title: "Ranocake",
       description: "A modern web application for a cake shop business. Features include product catalog, online ordering, and customer reviews. Built with a responsive design that looks great on all devices.",
-      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80",
+      image: "/lovable-uploads/8889ac13-f5b1-4ead-9f57-bc1e329dc42d.png",
       tech: ["Next.js", "Nest.js", "PostgreSQL", "Postman"],
       liveUrl: "https://ranocake.vercel.app",
       githubUrl: "https://github.com/nadhir24/ranocake"
