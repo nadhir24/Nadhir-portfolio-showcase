@@ -53,7 +53,7 @@ const ContactSection = () => {
         {
           name: formData.name,
           email: formData.email,
-          subject: formData.subject || "No Subject",
+          title: formData.subject || "No Subject",
           message: formData.message,
           reply_to: formData.email,
         },
