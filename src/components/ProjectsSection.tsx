@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,20 +14,12 @@ const ProjectsSection = () => {
       githubUrl: "https://github.com/nadhir24/ranocake"
     },
     {
-      title: "Hotel Realta - Backend",
-      description: "Backend system for Hotel Realta management application developed during Code X Academy. I was responsible for the users module, handling user authentication, profile management, and user-related functionalities.",
+      title: "Hotel Realta Management System",
+      description: "Full-stack hotel management application developed during Code X Academy. I was responsible for the users module, handling user authentication, profile management, and user-related functionalities for both frontend and backend.",
       image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
-      tech: ["Node.js", "Express.js", "PostgreSQL", "JWT"],
+      tech: ["Next.js", "Nest.js", "PostgreSQL", "Postman", "Multer"],
       liveUrl: "#",
       githubUrl: "https://github.com/VierryFadhilah/hotel-realta-back-end"
-    },
-    {
-      title: "Hotel Realta - Frontend",
-      description: "Frontend application for Hotel Realta management system developed during Code X Academy. I contributed to the users interface, implementing user registration, login, profile management, and user dashboard features.",
-      image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=800&q=80",
-      tech: ["React.js", "TypeScript", "Tailwind CSS", "Axios"],
-      liveUrl: "#",
-      githubUrl: "https://github.com/Fal-hi/hotel-realta-front-end"
     }
   ];
 
