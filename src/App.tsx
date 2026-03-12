@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,15 +7,17 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
 import Layout from "./components/Layout";
-import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPage";
-import WorkPage from "./pages/WorkPage";
-import ExperiencePage from "./pages/ExperiencePage";
-import CertificationsPage from "./pages/CertificationsPage";
-import ContactPage from "./pages/ContactPage";
-import ProjectDetailPage from "./pages/ProjectDetailPage";
-import NotFound from "./pages/NotFound";
 import SmoothScroll from "./components/SmoothScroll";
+
+// Route-level code splitting — each page loads on demand
+const HomePage = lazy(() => import("./pages/HomePage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const WorkPage = lazy(() => import("./pages/WorkPage"));
+const ExperiencePage = lazy(() => import("./pages/ExperiencePage"));
+const CertificationsPage = lazy(() => import("./pages/CertificationsPage"));
+const ContactPage = lazy(() => import("./pages/ContactPage"));
+const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
@@ -48,7 +51,9 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <AnimatedRoutes />
+          <Suspense fallback={<div style={{ minHeight: "100vh" }} />}>
+            <AnimatedRoutes />
+          </Suspense>
         </BrowserRouter>
       </TooltipProvider>
     </SmoothScroll>

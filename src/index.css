@@ -170,6 +170,7 @@
     filter: blur(130px);
     opacity: 0.8;
     transition: background-color 0.6s ease;
+    will-change: transform;
   }
 
   .blob-1 {

@@ -63,6 +63,7 @@ const CustomCursor = () => {
                     backgroundColor: "var(--text)",
                     pointerEvents: "none",
                     zIndex: 9999,
+                    willChange: "transform",
                     x: dotX,
                     y: dotY,
                 }}
@@ -79,6 +80,7 @@ const CustomCursor = () => {
                     border: "2px solid var(--text)",
                     pointerEvents: "none",
                     zIndex: 9998,
+                    willChange: "transform",
                     x: springX,
                     y: springY,
                     opacity: 0.4,
@@ -86,7 +88,9 @@ const CustomCursor = () => {
                 animate={{
                     scale: isHovering ? 1.8 : 1,
                     opacity: isHovering ? 0.8 : 0.4,
-                    backgroundColor: isHovering ? "rgba(100, 255, 218, 0.2)" : "transparent",
+                    boxShadow: isHovering
+                        ? "inset 0 0 20px 10px rgba(100, 255, 218, 0.2)"
+                        : "inset 0 0 0px 0px transparent",
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
             />
