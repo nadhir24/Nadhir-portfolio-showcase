@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import { motion, useSpring } from "framer-motion";
+import { motion, useSpring, useMotionValue } from "framer-motion";
 
 const CustomCursor = () => {
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [isHovering, setIsHovering] = useState(false);
+
+    // Use motion values to prevent React re-renders on mouse move
+    const dotX = useMotionValue(0);
+    const dotY = useMotionValue(0);
 
     // Smooth springs for the outer circle
     const springX = useSpring(0, { stiffness: 300, damping: 28, mass: 0.5 });
@@ -11,7 +14,8 @@ const CustomCursor = () => {
 
     useEffect(() => {
         const updateMousePosition = (e: MouseEvent) => {
-            setMousePosition({ x: e.clientX, y: e.clientY });
+            dotX.set(e.clientX - 4);     // Center the 8px dot
+            dotY.set(e.clientY - 4);
             springX.set(e.clientX - 16); // Center the 32px circle
             springY.set(e.clientY - 16);
         };
@@ -38,7 +42,7 @@ const CustomCursor = () => {
             window.removeEventListener("mousemove", updateMousePosition);
             window.removeEventListener("mouseover", handleMouseOver);
         };
-    }, [springX, springY]);
+    }, [dotX, dotY, springX, springY]);
 
     // Handle case for touch devices (no cursor needed)
     if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {
@@ -59,7 +63,8 @@ const CustomCursor = () => {
                     backgroundColor: "var(--text)",
                     pointerEvents: "none",
                     zIndex: 9999,
-                    transform: `translate(${mousePosition.x - 4}px, ${mousePosition.y - 4}px)`,
+                    x: dotX,
+                    y: dotY,
                 }}
             />
             <motion.div
