@@ -21,7 +21,7 @@ const HomePage = () => {
 
     useGSAP(() => {
         // Hero Text Advanced Reveal
-        const tl = gsap.timeline({ defaults: { ease: "expo.out" }, delay: 1 });
+        const tl = gsap.timeline({ defaults: { ease: "expo.out" }, delay: 0.1 });
 
         tl.fromTo(".hero-text-line",
             { yPercent: 120, rotationX: -90, opacity: 0 },
@@ -63,9 +63,14 @@ const HomePage = () => {
             if (!link) return;
 
             const txt = link.querySelector(".link-text") as HTMLElement;
+            let rect: DOMRect | null = null;
+
+            link.addEventListener("mouseenter", () => {
+                rect = link.getBoundingClientRect();
+            });
 
             link.addEventListener("mousemove", (e) => {
-                const rect = link.getBoundingClientRect();
+                if (!rect) rect = link.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
 
@@ -79,6 +84,7 @@ const HomePage = () => {
             });
 
             link.addEventListener("mouseleave", () => {
+                rect = null;
                 // Return to center
                 gsap.to(txt, {
                     x: 0,
@@ -102,7 +108,7 @@ const HomePage = () => {
         <motion.section
             ref={containerRef as any}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.5 } }}
+            animate={{ opacity: 1, transition: { duration: 0.5 } }}
             exit={{ opacity: 0, transition: { duration: 0.3 } }}
             style={{
                 height: "100vh",

@@ -71,12 +71,23 @@ const WorkPage = () => {
         });
     };
 
+    const containerRectRef = useRef<DOMRect | null>(null);
+
     const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         if (xTo.current && yTo.current) {
-            const rect = e.currentTarget.getBoundingClientRect();
+            if (!containerRectRef.current) containerRectRef.current = e.currentTarget.getBoundingClientRect();
+            const rect = containerRectRef.current;
             xTo.current(e.clientX - rect.left + 24);
             yTo.current(e.clientY - rect.top - 70);
         }
+    };
+
+    const handleContainerMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+        containerRectRef.current = e.currentTarget.getBoundingClientRect();
+    };
+
+    const handleContainerMouseLeave = () => {
+        containerRectRef.current = null;
     };
 
     const handleMouseEnter = (idx: number) => {
@@ -111,7 +122,7 @@ const WorkPage = () => {
             {/* Thick top separator */}
             <div style={{ height: "2px", background: "var(--text)", marginBottom: 0 }} />
 
-            <div ref={containerRef} style={{ position: "relative" }} onMouseMove={onMouseMove}>
+            <div ref={containerRef} style={{ position: "relative" }} onMouseMove={onMouseMove} onMouseEnter={handleContainerMouseEnter} onMouseLeave={handleContainerMouseLeave}>
                 {projectsData.map((p, i) => (
                     <a
                         key={i}
