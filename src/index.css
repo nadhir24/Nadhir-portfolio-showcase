@@ -220,7 +220,7 @@
 
   .marquee-inner {
     display: inline-flex;
-    animation: marquee-scroll 18s linear infinite;
+    animation: marquee-scroll 50s linear infinite;
   }
 
   .marquee-inner span {
