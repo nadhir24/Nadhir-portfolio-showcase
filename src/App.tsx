@@ -47,7 +47,15 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Suspense fallback={<div style={{ minHeight: "100vh" }} />}>
+        <Suspense fallback={
+          <div style={{ 
+            minHeight: "100vh", 
+            background: "#F5F5F0",
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999
+          }} />
+        }>
           <AnimatedRoutes />
         </Suspense>
       </BrowserRouter>
