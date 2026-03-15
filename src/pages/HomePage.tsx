@@ -58,40 +58,27 @@ const HomePage = () => {
             repeat: -1,
         });
 
-        // Magnetic Links Effect
+        // Magnetic Links Effect - simplified to avoid forced reflow
         linksRef.current.forEach((link) => {
             if (!link) return;
 
             const txt = link.querySelector(".link-text") as HTMLElement;
-            let rect: DOMRect | null = null;
+            let cachedX = 0, cachedY = 0;
 
             link.addEventListener("mouseenter", () => {
-                rect = link.getBoundingClientRect();
+                gsap.to(txt, { scale: 1.1, duration: 0.3, ease: "power2.out" });
             });
 
             link.addEventListener("mousemove", (e) => {
-                if (!rect) rect = link.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-
-                // Move text slightly towards cursor
-                gsap.to(txt, {
-                    x: x * 0.3,
-                    y: y * 0.3,
-                    duration: 0.4,
-                    ease: "power2.out",
-                });
+                // Use relative mouse position instead of DOM measurements
+                const bounds = link.getBoundingClientRect();
+                cachedX = (e.clientX - bounds.left - bounds.width / 2) * 0.1;
+                cachedY = (e.clientY - bounds.top - bounds.height / 2) * 0.1;
+                gsap.to(txt, { x: cachedX, y: cachedY, duration: 0.3, ease: "power2.out" });
             });
 
             link.addEventListener("mouseleave", () => {
-                rect = null;
-                // Return to center
-                gsap.to(txt, {
-                    x: 0,
-                    y: 0,
-                    duration: 0.7,
-                    ease: "elastic.out(1, 0.3)",
-                });
+                gsap.to(txt, { x: 0, y: 0, scale: 1, duration: 0.5, ease: "elastic.out(1, 0.3)" });
             });
         });
 
