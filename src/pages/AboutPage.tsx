@@ -1,9 +1,11 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Download } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion, useIsPresent } from "framer-motion";
+import { eventBus } from "@/lib/eventBus";
 
 const skills = [
     "JavaScript (ES6+)", "TypeScript", "React", "Next.js",
@@ -14,6 +16,15 @@ const AboutPage = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const imgRef = useRef<HTMLImageElement>(null);
     const imgWrapperRef = useRef<HTMLDivElement>(null);
+    const isPresent = useIsPresent();
+
+    useEffect(() => {
+        if (!isPresent) {
+            eventBus.emit("PAGE_TRANSITION_OUT", { type: "fold" });
+        } else {
+            eventBus.emit("PAGE_TRANSITION_IN", { type: "fade" });
+        }
+    }, [isPresent]);
 
     useGSAP(() => {
         // Main text and elements fade-up reveal
@@ -81,8 +92,11 @@ const AboutPage = () => {
     }, { scope: containerRef });
 
     return (
-        <div
+        <motion.div
             ref={containerRef}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.25 } }}
             style={{
                 minHeight: "100vh",
                 display: "flex",
@@ -190,7 +204,7 @@ const AboutPage = () => {
                     Next: Selected Works <ArrowRight size={20} />
                 </Link>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

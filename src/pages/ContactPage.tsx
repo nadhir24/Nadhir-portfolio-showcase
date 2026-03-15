@@ -107,9 +107,9 @@ const ContactPage = () => {
     return (
         <motion.div
             ref={containerRef as any}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { delay: 1, duration: 0.5 } }}
-            exit={{ opacity: 0, transition: { duration: 0.1 } }}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.25 } }}
             style={{
                 minHeight: "100vh",
                 display: "flex",

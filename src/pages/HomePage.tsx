@@ -94,9 +94,9 @@ const HomePage = () => {
     return (
         <motion.section
             ref={containerRef as any}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { duration: 0.5 } }}
-            exit={{ opacity: 0, transition: { duration: 0.3 } }}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.25 } }}
             style={{
                 height: "100vh",
                 overflow: "hidden",
