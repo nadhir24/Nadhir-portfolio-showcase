@@ -5,13 +5,13 @@ export const projectsData = [
         category: "Full-Stack Development",
         date: "2024",
         role: "Full-Stack Developer",
-        image: "/lovable-uploads/deenha1.png",
+        image: "/lovable-uploads/deenha1.webp",
         description: "Modern E-commerce web application for Deenha.",
         fullDescription: "A full-stack e-commerce application built for Deenha.com. Features include product browsing, secure checkout, and an administrative dashboard for managing orders and inventory.",
         url: "https://deenha.com",
         contentImages: [
-            "/lovable-uploads/deenha1.png",
-            "/lovable-uploads/deenha2.png",
+            "/lovable-uploads/deenha1.webp",
+            "/lovable-uploads/deenha2.webp",
             "/lovable-uploads/iphone.png"
         ]
     },
