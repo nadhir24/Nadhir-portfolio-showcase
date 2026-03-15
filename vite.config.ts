@@ -34,7 +34,6 @@ export default defineConfig(({ mode }) => ({
             "@radix-ui/react-toast",
             "@radix-ui/react-navigation-menu",
             "@radix-ui/react-slot",
-            "@radix-ui/react-sheet",
           ],
           "vendor-ui": [
             "class-variance-authority",
