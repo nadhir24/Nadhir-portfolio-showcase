@@ -19,21 +19,28 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     cssCodeSplit: true,
+    target: "esnext",
+    minify: "esbuild",
     rollupOptions: {
       output: {
         manualChunks: {
-          "vendor-three": ["three"],
+          "vendor-react": ["react", "react-dom", "react-router-dom"],
           "vendor-motion": ["framer-motion"],
           "vendor-gsap": ["gsap", "@gsap/react"],
-          "vendor-ui": [
+          "vendor-radix": [
+            "@radix-ui/react-dialog",
+            "@radix-ui/react-dropdown-menu",
             "@radix-ui/react-tooltip",
             "@radix-ui/react-toast",
-            "@radix-ui/react-dialog",
             "@radix-ui/react-navigation-menu",
             "@radix-ui/react-slot",
+            "@radix-ui/react-sheet",
+          ],
+          "vendor-ui": [
             "class-variance-authority",
             "clsx",
             "tailwind-merge",
+            "lucide-react",
           ],
         },
       },

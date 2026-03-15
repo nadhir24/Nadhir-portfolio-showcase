@@ -2,7 +2,6 @@ import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
@@ -18,8 +17,6 @@ const CertificationsPage = lazy(() => import("./pages/CertificationsPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-
-const queryClient = new QueryClient();
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -45,19 +42,17 @@ const AnimatedRoutes = () => {
 };
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <SmoothScroll>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Suspense fallback={<div style={{ minHeight: "100vh" }} />}>
-            <AnimatedRoutes />
-          </Suspense>
-        </BrowserRouter>
-      </TooltipProvider>
-    </SmoothScroll>
-  </QueryClientProvider>
+  <SmoothScroll>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Suspense fallback={<div style={{ minHeight: "100vh" }} />}>
+          <AnimatedRoutes />
+        </Suspense>
+      </BrowserRouter>
+    </TooltipProvider>
+  </SmoothScroll>
 );
 
 export default App;
