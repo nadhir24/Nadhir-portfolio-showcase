@@ -50,7 +50,7 @@ const App = () => (
         <Suspense fallback={
           <div style={{ 
             minHeight: "100vh", 
-            background: "#F5F5F0",
+            background: "var(--bg-initial, #F5F5F0)",
             position: "fixed",
             inset: 0,
             zIndex: 9999
