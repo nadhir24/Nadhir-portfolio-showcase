@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Mail, Github, Linkedin, Send, ArrowRight } from "lucide-react";
+import { Mail, Github, Linkedin, Send, ArrowLeft, ArrowRight } from "lucide-react";
+import { usePageNavigate } from "@/hooks/usePageNavigate";
 import { toast } from "@/hooks/use-toast";
 import emailjs from "emailjs-com";
 import gsap from "gsap";
@@ -10,6 +10,7 @@ import { eventBus } from "@/lib/eventBus";
 
 const ContactPage = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const navigateTo = usePageNavigate(containerRef);
     const socialRefs = useRef<(HTMLAnchorElement | null)[]>([]);
     const isPresent = useIsPresent();
 
@@ -198,20 +199,32 @@ const ContactPage = () => {
                 </form>
             </div>
 
-            {/* Next Page Navigation */}
-            <div style={{ marginTop: "6rem", display: "flex", justifyContent: "flex-end", borderTop: "1px solid var(--border-color)", paddingTop: "2rem" }}>
-                <Link
-                    to="/"
-                    className="form-item sc-link"
+            {/* Prev / Next Navigation */}
+            <div style={{ marginTop: "6rem", display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid var(--border-color)", paddingTop: "2rem" }}>
+                <button
+                    onClick={() => navigateTo("/certifications")}
                     style={{
-                        display: "flex", alignItems: "center", gap: "1rem", color: "var(--text)", textDecoration: "none",
-                        fontSize: "1.2rem", fontWeight: 600, opacity: 0
+                        display: "flex", alignItems: "center", gap: "0.75rem", background: "none", border: "none",
+                        color: "var(--text-muted)", cursor: "pointer", fontSize: "1rem", fontWeight: 500,
+                        transition: "color 0.2s ease", padding: 0,
                     }}
-                    onMouseEnter={(e) => gsap.to(e.currentTarget, { opacity: 0.6, duration: 0.2 })}
-                    onMouseLeave={(e) => gsap.to(e.currentTarget, { opacity: 1, duration: 0.2 })}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
                 >
-                    Back to Home <ArrowRight size={20} />
-                </Link>
+                    <ArrowLeft size={18} /> Certifications
+                </button>
+                <button
+                    onClick={() => navigateTo("/")}
+                    style={{
+                        display: "flex", alignItems: "center", gap: "0.75rem", background: "none", border: "none",
+                        color: "var(--text)", cursor: "pointer", fontSize: "1.2rem", fontWeight: 600,
+                        transition: "opacity 0.2s ease", padding: 0,
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.6")}
+                    onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+                >
+                    Home <ArrowRight size={20} />
+                </button>
             </div>
         </motion.div>
     );

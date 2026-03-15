@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Award, ExternalLink, ArrowRight } from "lucide-react";
+import { Award, ExternalLink, ArrowLeft, ArrowRight } from "lucide-react";
+import { usePageNavigate } from "@/hooks/usePageNavigate";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -18,6 +18,7 @@ const certs = [
 
 const CertificationsPage = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const navigateTo = usePageNavigate(containerRef);
     const isPresent = useIsPresent();
 
     useEffect(() => {
@@ -118,20 +119,32 @@ const CertificationsPage = () => {
                 ))}
             </div>
 
-            {/* Next Page Navigation */}
-            <div style={{ marginTop: "6rem", display: "flex", justifyContent: "flex-end", borderTop: "1px solid var(--border-color)", paddingTop: "2rem" }}>
-                <Link
-                    to="/contact"
-                    className="sc-link"
+            {/* Prev / Next Navigation */}
+            <div style={{ marginTop: "6rem", display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid var(--border-color)", paddingTop: "2rem" }}>
+                <button
+                    onClick={() => navigateTo("/experience")}
                     style={{
-                        display: "flex", alignItems: "center", gap: "1rem", color: "var(--text)", textDecoration: "none",
-                        fontSize: "1.2rem", fontWeight: 600, transition: "opacity 0.2s ease"
+                        display: "flex", alignItems: "center", gap: "0.75rem", background: "none", border: "none",
+                        color: "var(--text-muted)", cursor: "pointer", fontSize: "1rem", fontWeight: 500,
+                        transition: "color 0.2s ease", padding: 0,
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
+                >
+                    <ArrowLeft size={18} /> Experience
+                </button>
+                <button
+                    onClick={() => navigateTo("/contact")}
+                    style={{
+                        display: "flex", alignItems: "center", gap: "0.75rem", background: "none", border: "none",
+                        color: "var(--text)", cursor: "pointer", fontSize: "1.2rem", fontWeight: 600,
+                        transition: "opacity 0.2s ease", padding: 0,
                     }}
                     onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.6")}
                     onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
                 >
-                    Next: Contact <ArrowRight size={20} />
-                </Link>
+                    Contact <ArrowRight size={20} />
+                </button>
             </div>
         </motion.div>
     );

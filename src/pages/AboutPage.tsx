@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowLeft, ArrowRight, Download } from "lucide-react";
+import { usePageNavigate } from "@/hooks/usePageNavigate";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -14,6 +14,7 @@ const skills = [
 
 const AboutPage = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const navigateTo = usePageNavigate(containerRef);
     const imgRef = useRef<HTMLImageElement>(null);
     const imgWrapperRef = useRef<HTMLDivElement>(null);
     const isPresent = useIsPresent();
@@ -190,19 +191,32 @@ const AboutPage = () => {
                 </div>
             </div>
 
-            {/* Next Page Navigation */}
-            <div className="fade-up" style={{ marginTop: "6rem", display: "flex", justifyContent: "flex-end", borderTop: "1px solid var(--border-color)", paddingTop: "2rem" }}>
-                <Link
-                    to="/work"
+            {/* Prev / Next Navigation */}
+            <div className="fade-up" style={{ marginTop: "6rem", display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid var(--border-color)", paddingTop: "2rem" }}>
+                <button
+                    onClick={() => navigateTo("/")}
                     style={{
-                        display: "flex", alignItems: "center", gap: "1rem", color: "var(--text)", textDecoration: "none",
-                        fontSize: "1.2rem", fontWeight: 600, transition: "opacity 0.2s ease"
+                        display: "flex", alignItems: "center", gap: "0.75rem", background: "none", border: "none",
+                        color: "var(--text-muted)", cursor: "pointer", fontSize: "1rem", fontWeight: 500,
+                        transition: "color 0.2s ease", padding: 0,
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
+                >
+                    <ArrowLeft size={18} /> Home
+                </button>
+                <button
+                    onClick={() => navigateTo("/work")}
+                    style={{
+                        display: "flex", alignItems: "center", gap: "0.75rem", background: "none", border: "none",
+                        color: "var(--text)", cursor: "pointer", fontSize: "1.2rem", fontWeight: 600,
+                        transition: "opacity 0.2s ease", padding: 0,
                     }}
                     onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.6")}
                     onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
                 >
-                    Next: Selected Works <ArrowRight size={20} />
-                </Link>
+                    Selected Works <ArrowRight size={20} />
+                </button>
             </div>
         </motion.div>
     );

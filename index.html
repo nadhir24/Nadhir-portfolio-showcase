@@ -26,6 +26,15 @@
         if (theme === 'dark' || (!theme && supportDarkMode)) {
           document.documentElement.classList.add('dark');
         }
+        // Suppress CSS transitions during initial paint to prevent flash
+        document.documentElement.classList.add('no-transition');
+        window.addEventListener('DOMContentLoaded', function() {
+          requestAnimationFrame(function() {
+            requestAnimationFrame(function() {
+              document.documentElement.classList.remove('no-transition');
+            });
+          });
+        });
       } catch (e) {}
     })();
   </script>
@@ -38,6 +47,11 @@
     .dark { --bg-initial: #0E0E0E; }
     body { font-family: var(--font-sans); margin: 0; background: var(--bg-initial); }
     #root { min-height: 100vh; }
+    /* Suppress all transitions on initial load to prevent theme flash */
+    .no-transition *, .no-transition *::before, .no-transition *::after {
+      transition: none !important;
+      animation-duration: 0.01ms !important;
+    }
   </style>
 </head>
 

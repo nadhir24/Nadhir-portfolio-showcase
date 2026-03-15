@@ -1,15 +1,17 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { usePageNavigate } from "@/hooks/usePageNavigate";
 import { projectsData } from "@/data/projects";
 import { motion, useIsPresent } from "framer-motion";
 import { eventBus } from "@/lib/eventBus";
 
 const WorkPage = () => {
     const navigate = useNavigate();
-    const containerRef = useRef<HTMLDivElement>(null);
     const pageRef = useRef<HTMLDivElement>(null);
+    const navigateTo = usePageNavigate(pageRef);
     const cursorRef = useRef<HTMLDivElement>(null);
 
     // QuickTo trackers for high-performance cursor following
@@ -28,7 +30,7 @@ const WorkPage = () => {
     }, [isPresent]);
 
     useGSAP(() => {
-        if (!containerRef.current) return;
+        if (!pageRef.current) return;
 
         // Intro animation for rows using fromTo for strict mode safety
         gsap.fromTo(".proj-row",
@@ -59,7 +61,7 @@ const WorkPage = () => {
         }
 
         // Animate out the rows and then navigate
-        gsap.to(containerRef.current?.querySelectorAll(".proj-row") || [], {
+        gsap.to(pageRef.current?.querySelectorAll(".proj-row") || [], {
             y: -20,
             opacity: 0,
             stagger: 0.04,
@@ -122,7 +124,7 @@ const WorkPage = () => {
             {/* Thick top separator */}
             <div style={{ height: "2px", background: "var(--text)", marginBottom: 0 }} />
 
-            <div ref={containerRef} style={{ position: "relative" }} onMouseMove={onMouseMove} onMouseEnter={handleContainerMouseEnter} onMouseLeave={handleContainerMouseLeave}>
+            <div ref={pageRef} style={{ position: "relative" }} onMouseMove={onMouseMove} onMouseEnter={handleContainerMouseEnter} onMouseLeave={handleContainerMouseLeave}>
                 {projectsData.map((p, i) => (
                     <a
                         key={i}
@@ -220,19 +222,32 @@ const WorkPage = () => {
                 </a>
             </div>
 
-            {/* Next Page Navigation */}
-            <div style={{ marginTop: "6rem", display: "flex", justifyContent: "flex-end", borderTop: "1px solid var(--border-color)", paddingTop: "2rem" }}>
-                <Link
-                    to="/experience"
+            {/* Prev / Next Navigation */}
+            <div style={{ marginTop: "6rem", display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid var(--border-color)", paddingTop: "2rem" }}>
+                <button
+                    onClick={() => navigateTo("/about")}
                     style={{
-                        display: "flex", alignItems: "center", gap: "1rem", color: "var(--text)", textDecoration: "none",
-                        fontSize: "1.2rem", fontWeight: 600, transition: "opacity 0.2s ease"
+                        display: "flex", alignItems: "center", gap: "0.75rem", background: "none", border: "none",
+                        color: "var(--text-muted)", cursor: "pointer", fontSize: "1rem", fontWeight: 500,
+                        transition: "color 0.2s ease", padding: 0,
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
+                >
+                    <ArrowLeft size={18} /> About
+                </button>
+                <button
+                    onClick={() => navigateTo("/experience")}
+                    style={{
+                        display: "flex", alignItems: "center", gap: "0.75rem", background: "none", border: "none",
+                        color: "var(--text)", cursor: "pointer", fontSize: "1.2rem", fontWeight: 600,
+                        transition: "opacity 0.2s ease", padding: 0,
                     }}
                     onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.6")}
                     onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
                 >
-                    Next: Experience <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                </Link>
+                    Experience <ArrowRight size={20} />
+                </button>
             </div>
         </motion.div>
     );
