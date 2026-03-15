@@ -204,7 +204,7 @@ const Navbar = ({ isDark, onToggleTheme }: NavbarProps) => {
           {[
             { label: "GitHub ↗", href: "https://github.com/nadhir24" },
             { label: "LinkedIn ↗", href: "https://www.linkedin.com/in/nadhir-ghassan24" },
-            { label: "Resume ↗", href: "public/Nadhir Ghassan-resume.pdf" }
+            { label: "Resume ↗", href: "/Nadhir Ghassan-resume.pdf" }
           ].map(s => (
             <a
               key={s.label}
