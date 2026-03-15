@@ -22,22 +22,18 @@ const AnimatedRoutes = () => {
   const location = useLocation();
 
   return (
-    <>
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path="about" element={<AboutPage />} />
-            <Route path="work" element={<WorkPage />} />
-            <Route path="work/:id" element={<ProjectDetailPage />} />
-            <Route path="experience" element={<ExperiencePage />} />
-            <Route path="certifications" element={<CertificationsPage />} />
-            <Route path="contact" element={<ContactPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </AnimatePresence>
-    </>
+    <Routes location={location} key={location.pathname}>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="work" element={<WorkPage />} />
+        <Route path="work/:id" element={<ProjectDetailPage />} />
+        <Route path="experience" element={<ExperiencePage />} />
+        <Route path="certifications" element={<CertificationsPage />} />
+        <Route path="contact" element={<ContactPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 };
 

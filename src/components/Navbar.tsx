@@ -24,8 +24,10 @@ const Navbar = ({ isDark, onToggleTheme }: NavbarProps) => {
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll);
+    // Reset scroll state on navigation
+    setIsScrolled(window.scrollY > 40);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   // Lock body scroll when menu open
   useEffect(() => {

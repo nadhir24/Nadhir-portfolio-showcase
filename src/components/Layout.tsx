@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import CustomCursor from "@/components/CustomCursor";
+import { AnimatePresence } from "framer-motion";
 
 const Layout = () => {
     const [isDark, setIsDark] = useState(() => {
@@ -31,7 +32,11 @@ const Layout = () => {
             <AnimatedBlobs />
             <Navbar isDark={isDark} onToggleTheme={() => setIsDark((d) => !d)} />
             <main>
-                <Outlet />
+                <AnimatePresence mode="wait">
+                    <div key={location.pathname}>
+                        <Outlet />
+                    </div>
+                </AnimatePresence>
             </main>
         </div>
     );
