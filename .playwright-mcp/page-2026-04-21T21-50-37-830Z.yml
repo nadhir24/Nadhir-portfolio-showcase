@@ -1,0 +1,100 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=e3]:
+    - region "Notifications (F8)":
+      - list
+    - generic [ref=e4]:
+      - banner [ref=e5]:
+        - link "NG" [ref=e6] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e7]:
+          - button "Toggle theme" [ref=e8] [cursor=pointer]:
+            - img [ref=e9]
+          - button "Open menu" [ref=e11] [cursor=pointer]:
+            - img [ref=e12]
+      - main [ref=e17]:
+        - generic [ref=e19]:
+          - heading "Certifications" [level=1] [ref=e20]
+          - generic [ref=e22]:
+            - link "Fullstack Node.js Program Code X Academy May 2023" [ref=e23] [cursor=pointer]:
+              - /url: https://drive.google.com/file/d/1TmxXEG6Yr4FAvSqxAh5maA3CmOMj5Jj9/view
+              - generic [ref=e24]:
+                - img [ref=e25]
+                - generic [ref=e28]: Fullstack Node.js Program
+              - generic [ref=e29]:
+                - generic [ref=e30]: Code X Academy
+                - generic [ref=e31]:
+                  - text: May 2023
+                  - img [ref=e32]
+            - link "Belajar Dasar-Dasar DevOps Dicoding Indonesia Nov 2022" [ref=e36] [cursor=pointer]:
+              - /url: https://www.dicoding.com/certificates/0LZ0GGQ63X65
+              - generic [ref=e37]:
+                - img [ref=e38]
+                - generic [ref=e41]: Belajar Dasar-Dasar DevOps
+              - generic [ref=e42]:
+                - generic [ref=e43]: Dicoding Indonesia
+                - generic [ref=e44]:
+                  - text: Nov 2022
+                  - img [ref=e45]
+            - link "Belajar Dasar Pemrograman JavaScript Dicoding Indonesia Oct 2022" [ref=e49] [cursor=pointer]:
+              - /url: https://www.dicoding.com/certificates/JLX1L3JYJX72
+              - generic [ref=e50]:
+                - img [ref=e51]
+                - generic [ref=e54]: Belajar Dasar Pemrograman JavaScript
+              - generic [ref=e55]:
+                - generic [ref=e56]: Dicoding Indonesia
+                - generic [ref=e57]:
+                  - text: Oct 2022
+                  - img [ref=e58]
+            - link "Kursus HTML & CSS Progate Oct 2022" [ref=e62] [cursor=pointer]:
+              - /url: https://progate.com/course_certificate/e4cdc974rk3myb
+              - generic [ref=e63]:
+                - img [ref=e64]
+                - generic [ref=e67]: Kursus HTML & CSS
+              - generic [ref=e68]:
+                - generic [ref=e69]: Progate
+                - generic [ref=e70]:
+                  - text: Oct 2022
+                  - img [ref=e71]
+            - link "Kursus Javascript Progate Oct 2022" [ref=e75] [cursor=pointer]:
+              - /url: https://progate.com/course_certificate/c86122berjzrgc
+              - generic [ref=e76]:
+                - img [ref=e77]
+                - generic [ref=e80]: Kursus Javascript
+              - generic [ref=e81]:
+                - generic [ref=e82]: Progate
+                - generic [ref=e83]:
+                  - text: Oct 2022
+                  - img [ref=e84]
+            - link "Competence Certificate BNSP Sep 2022" [ref=e88] [cursor=pointer]:
+              - /url: https://drive.google.com/file/d/1hYaPIRcLjxr4dnQg17KeVvUtc_ZcFurw/view
+              - generic [ref=e89]:
+                - img [ref=e90]
+                - generic [ref=e93]: Competence Certificate
+              - generic [ref=e94]:
+                - generic [ref=e95]: BNSP
+                - generic [ref=e96]:
+                  - text: Sep 2022
+                  - img [ref=e97]
+          - generic [ref=e101]:
+            - button "Experience" [ref=e102] [cursor=pointer]:
+              - img [ref=e103]
+              - text: Experience
+            - button "Contact" [ref=e105] [cursor=pointer]:
+              - text: Contact
+              - img [ref=e106]
+      - contentinfo [ref=e108]:
+        - generic [ref=e109]:
+          - generic [ref=e110]:
+            - link "GitHub" [ref=e111] [cursor=pointer]:
+              - /url: https://github.com/nadhir24
+              - img [ref=e112]
+            - link "LinkedIn" [ref=e114] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/nadhir-ghassan24
+              - img [ref=e115]
+            - link "Email" [ref=e117] [cursor=pointer]:
+              - /url: mailto:nadhirghassanwork@gmail.com
+              - img [ref=e118]
+          - paragraph [ref=e121]: © 2026 Nadhir Ghassan
+          - button "Back to top" [ref=e122] [cursor=pointer]

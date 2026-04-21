@@ -4,6 +4,17 @@ import { useGSAP } from "@gsap/react";
 import { motion, useIsPresent } from "framer-motion";
 import { eventBus } from "@/lib/eventBus";
 
+const renderHeroChars = (text: string, prefix: string) =>
+    text.split("").map((char, index) => (
+        <span
+            key={`${prefix}-${index}`}
+            className="hero-char"
+            style={{ display: "inline-block", willChange: "transform, opacity" }}
+        >
+            {char === " " ? "\u00A0" : char}
+        </span>
+    ));
+
 const HomePage = () => {
     const containerRef = useRef<HTMLElement>(null);
     const isPresent = useIsPresent();
@@ -22,19 +33,31 @@ const HomePage = () => {
     useGSAP(() => {
         // Hero Text Advanced Reveal
         const tl = gsap.timeline({ defaults: { ease: "expo.out" }, delay: 0.1 });
+        const path = containerRef.current?.querySelector(".hero-svg-line") as SVGPathElement | null;
 
-        tl.fromTo(".hero-text-line",
+        tl.fromTo(".hero-char",
             { yPercent: 120, rotationX: -90, opacity: 0 },
             {
                 yPercent: 0,
                 rotationX: 0,
                 transformOrigin: "bottom center -50",
                 opacity: 1,
-                stagger: 0.15,
-                duration: 1.5,
+                stagger: 0.03,
+                duration: 1.2,
             }
-        )
-            .fromTo(".hero-links a",
+        );
+
+        if (path) {
+            const length = path.getTotalLength();
+            gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+            tl.to(path, {
+                strokeDashoffset: 0,
+                duration: 2,
+                ease: "power2.inOut",
+            }, "-=1.5");
+        }
+
+        tl.fromTo(".hero-links a",
                 { y: 30, opacity: 0 },
                 {
                     y: 0,
@@ -113,6 +136,28 @@ const HomePage = () => {
         >
             {/* Giant name with clipped reveal */}
             <div className="hero-name">
+                <svg
+                    aria-hidden="true"
+                    viewBox="0 0 420 220"
+                    style={{
+                        position: "absolute",
+                        left: "6%",
+                        bottom: "20%",
+                        width: "min(30vw, 280px)",
+                        height: "auto",
+                        opacity: 0.15,
+                        pointerEvents: "none",
+                    }}
+                >
+                    <path
+                        className="hero-svg-line"
+                        d="M10 188C58 164 73 128 110 114C149 99 175 130 213 117C261 101 281 42 329 33C360 28 386 40 410 64"
+                        fill="none"
+                        stroke="var(--text-muted)"
+                        strokeWidth="1"
+                        strokeLinecap="round"
+                    />
+                </svg>
                 <h1
                     style={{
                         fontSize: "clamp(3rem, 13vw, 11rem)",
@@ -125,10 +170,14 @@ const HomePage = () => {
                     }}
                 >
                     <div style={{ overflow: "hidden", paddingBottom: "2px" }}>
-                        <div className="hero-text-line" style={{ willChange: "transform, opacity", opacity: 0 }}>Nadhir</div>
+                        <div className="hero-text-line" style={{ whiteSpace: "pre-wrap" }}>
+                            {renderHeroChars("Nadhir", "nadhir")}
+                        </div>
                     </div>
                     <div style={{ overflow: "hidden", paddingBottom: "2px" }}>
-                        <div className="hero-text-line" style={{ willChange: "transform, opacity", opacity: 0 }}>Ghassan</div>
+                        <div className="hero-text-line" style={{ whiteSpace: "pre-wrap" }}>
+                            {renderHeroChars("Ghassan", "ghassan")}
+                        </div>
                     </div>
                 </h1>
             </div>

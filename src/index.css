@@ -136,6 +136,19 @@
   }
 }
 
+@keyframes status-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.35);
+    opacity: 0.65;
+  }
+}
+
 /* ── Base ───────────────────────────────────────────────── */
 @layer base {
   * {
@@ -166,10 +179,16 @@
   h6 {
     color: var(--text);
     font-weight: 700;
+    font-family: 'Sora', system-ui, sans-serif;
   }
 
   ::selection {
     background: rgba(100, 255, 218, 0.25);
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
   }
 }
 
@@ -188,15 +207,16 @@
   .blob {
     position: absolute;
     border-radius: 9999px;
-    filter: blur(130px);
-    opacity: 0.8;
+    filter: blur(80px);
+    opacity: 0.7;
     transition: background-color 0.6s ease;
     will-change: transform;
+    contain: layout style paint;
   }
 
   .blob-1 {
-    width: 550px;
-    height: 550px;
+    width: 450px;
+    height: 450px;
     top: -120px;
     left: -120px;
     background-color: var(--blob-1);
@@ -204,8 +224,8 @@
   }
 
   .blob-2 {
-    width: 450px;
-    height: 450px;
+    width: 380px;
+    height: 380px;
     top: 40%;
     right: -100px;
     background-color: var(--blob-2);
@@ -213,8 +233,8 @@
   }
 
   .blob-3 {
-    width: 400px;
-    height: 400px;
+    width: 350px;
+    height: 350px;
     bottom: -100px;
     left: 30%;
     background-color: var(--blob-3);
@@ -222,12 +242,39 @@
   }
 
   .blob-4 {
-    width: 320px;
-    height: 320px;
+    width: 280px;
+    height: 280px;
     top: 20%;
     left: 40%;
     background-color: var(--blob-4);
     animation: blob-drift-2 22s ease-in-out infinite reverse;
+  }
+
+  /* Mobile: hide blob-3 and blob-4, reduce remaining blobs */
+  @media (max-width: 767px) {
+    .blob {
+      filter: blur(60px);
+      opacity: 0.5;
+    }
+    .blob-1 {
+      width: 280px;
+      height: 280px;
+    }
+    .blob-2 {
+      width: 220px;
+      height: 220px;
+    }
+    .blob-3,
+    .blob-4 {
+      display: none;
+    }
+  }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .blob {
+      animation: none !important;
+    }
   }
 
   /* ── Marquee ── */
@@ -340,5 +387,93 @@
   .sc-input::placeholder {
     color: var(--text-muted);
     opacity: 0.6;
+  }
+
+  .proj-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-layout {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.35fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .about-photo-col {
+    position: relative;
+    align-self: start;
+  }
+
+  .about-content-col {
+    min-width: 0;
+  }
+
+  .about-bento-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .about-bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  .about-bio-card {
+    grid-column: span 2;
+  }
+
+  .status-dot {
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 9999px;
+    background: #22c55e;
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.35);
+    animation: status-pulse 1.8s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  .teal-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 9999px;
+    background: #2dd4bf;
+    box-shadow: 0 0 16px rgba(45, 212, 191, 0.7);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 767px) {
+    .proj-content-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .about-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .about-bento-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-bio-card {
+      grid-column: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }

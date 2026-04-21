@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { usePageNavigate } from "@/hooks/usePageNavigate";
 import { projectsData } from "@/data/projects";
 import { motion, useIsPresent } from "framer-motion";
 import { eventBus } from "@/lib/eventBus";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const WorkPage = () => {
     const navigate = useNavigate();
@@ -14,7 +17,6 @@ const WorkPage = () => {
     const navigateTo = usePageNavigate(pageRef);
     const cursorRef = useRef<HTMLDivElement>(null);
 
-    // QuickTo trackers for high-performance cursor following
     const xTo = useRef<gsap.QuickToFunc>();
     const yTo = useRef<gsap.QuickToFunc>();
 
@@ -32,20 +34,27 @@ const WorkPage = () => {
     useGSAP(() => {
         if (!pageRef.current) return;
 
-        // Intro animation for rows using fromTo for strict mode safety
-        gsap.fromTo(".proj-row",
-            { y: 50, opacity: 0 },
+        // Stagger reveal for bento cards
+        gsap.fromTo(".project-card",
+            { y: 60, opacity: 0, scale: 0.96 },
             {
                 y: 0,
                 opacity: 1,
+                scale: 1,
                 stagger: 0.1,
-                duration: 0.8,
+                duration: 0.9,
                 ease: "power3.out",
-                delay: 0.3 // reduced delay so they appear sooner
+                delay: 0.3,
             }
         );
 
-        // Initialize quickTo for cursor
+        // Title animation
+        gsap.fromTo(".sc-section-title",
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", delay: 0.1 }
+        );
+
+        // Initialize quickTo for floating cursor card
         if (cursorRef.current) {
             xTo.current = gsap.quickTo(cursorRef.current, "x", { duration: 0.4, ease: "power3" });
             yTo.current = gsap.quickTo(cursorRef.current, "y", { duration: 0.4, ease: "power3" });
@@ -54,22 +63,16 @@ const WorkPage = () => {
 
     const handleProjectClick = (e: React.MouseEvent, id: string) => {
         e.preventDefault();
-
-        // Hide floating card immediately
         if (cursorRef.current) {
             gsap.to(cursorRef.current, { scale: 0, opacity: 0, duration: 0.2 });
         }
-
-        // Animate out the rows and then navigate
-        gsap.to(pageRef.current?.querySelectorAll(".proj-row") || [], {
+        gsap.to(pageRef.current?.querySelectorAll(".project-card") || [], {
             y: -20,
             opacity: 0,
             stagger: 0.04,
             duration: 0.4,
             ease: "power2.inOut",
-            onComplete: () => {
-                navigate(`/work/${id}`);
-            }
+            onComplete: () => navigate(`/work/${id}`),
         });
     };
 
@@ -87,7 +90,6 @@ const WorkPage = () => {
     const handleContainerMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
         containerRectRef.current = e.currentTarget.getBoundingClientRect();
     };
-
     const handleContainerMouseLeave = () => {
         containerRectRef.current = null;
     };
@@ -96,7 +98,6 @@ const WorkPage = () => {
         setHoveredProject(idx);
         gsap.to(cursorRef.current, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.5)" });
     };
-
     const handleMouseLeave = () => {
         gsap.to(cursorRef.current, { scale: 0.8, opacity: 0, duration: 0.2, ease: "power3.out" });
     };
@@ -111,7 +112,6 @@ const WorkPage = () => {
                 minHeight: "100vh",
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "center",
                 position: "relative",
                 zIndex: 10,
                 maxWidth: "72rem",
@@ -119,63 +119,115 @@ const WorkPage = () => {
                 padding: "7rem 2rem 4rem",
             }}
         >
-            <h1 className="sc-section-title">Selected Works</h1>
+            <h1 className="sc-section-title" style={{ opacity: 0 }}>Selected Works</h1>
 
-            {/* Thick top separator */}
-            <div style={{ height: "2px", background: "var(--text)", marginBottom: 0 }} />
+            <div
+                style={{ position: "relative" }}
+                onMouseMove={onMouseMove}
+                onMouseEnter={handleContainerMouseEnter}
+                onMouseLeave={handleContainerMouseLeave}
+            >
+                {/* Bento Grid */}
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(2, 1fr)",
+                        gap: "1.5rem",
+                    }}
+                    className="work-bento-grid"
+                >
+                    {projectsData.map((p, i) => {
+                        // First project spans full width for emphasis
+                        const isFeature = i === 0;
+                        return (
+                            <a
+                                key={p.id}
+                                href={`/work/${p.id}`}
+                                onClick={(e) => handleProjectClick(e, p.id)}
+                                className="project-card"
+                                style={{
+                                    gridColumn: isFeature ? "1 / -1" : undefined,
+                                    textDecoration: "none",
+                                    color: "var(--text)",
+                                    cursor: "pointer",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    gap: "1rem",
+                                    padding: "1rem",
+                                    background: "var(--bg-card)",
+                                    border: "1px solid var(--border-color)",
+                                    borderRadius: "1.25rem",
+                                    backdropFilter: "blur(14px)",
+                                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                                    opacity: 0, // GSAP fromTo will handle this
+                                }}
+                                onMouseEnter={(e) => {
+                                    handleMouseEnter(i);
+                                    e.currentTarget.style.transform = "translateY(-4px)";
+                                    e.currentTarget.style.boxShadow = "0 20px 60px rgba(0,0,0,0.1)";
+                                }}
+                                onMouseLeave={(e) => {
+                                    handleMouseLeave();
+                                    e.currentTarget.style.transform = "translateY(0)";
+                                    e.currentTarget.style.boxShadow = "none";
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        aspectRatio: isFeature ? "21 / 9" : "16 / 10",
+                                        borderRadius: "0.75rem",
+                                        overflow: "hidden",
+                                        border: "1px solid var(--border-color)",
+                                    }}
+                                >
+                                    <img
+                                        src={p.image}
+                                        alt={p.title}
+                                        loading={i > 1 ? "lazy" : undefined}
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                            objectFit: "cover",
+                                            display: "block",
+                                            transition: "transform 0.5s ease",
+                                        }}
+                                        onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.03)")}
+                                        onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                                    />
+                                </div>
 
-            <div ref={pageRef} style={{ position: "relative" }} onMouseMove={onMouseMove} onMouseEnter={handleContainerMouseEnter} onMouseLeave={handleContainerMouseLeave}>
-                {projectsData.map((p, i) => (
-                    <a
-                        key={i}
-                        href={`/work/${p.id}`}
-                        onClick={(e) => handleProjectClick(e, p.id)}
-                        className="proj-row"
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            padding: "1.75rem 0.25rem",
-                            borderBottom: "1px solid var(--border-color)",
-                            textDecoration: "none",
-                            color: "var(--text)",
-                            cursor: "pointer",
-                            opacity: 0 // Set to 0 so HTML matches initial fromTo state, prevents FOUC
-                        }}
-                        onMouseEnter={() => handleMouseEnter(i)}
-                        onMouseLeave={handleMouseLeave}
-                    >
-                        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                            <div className="proj-dot" style={{
-                                width: "5px", height: "1.8rem", borderRadius: "3px",
-                                background: "var(--text)",
-                                flexShrink: 0,
-                            }} />
-                            <span style={{
-                                fontSize: "clamp(1.4rem, 3.5vw, 2.2rem)",
-                                fontWeight: 700,
-                                letterSpacing: "-0.02em"
-                            }}>
-                                {p.title}
-                            </span>
-                        </div>
-                        <span style={{
-                            fontSize: "0.85rem",
-                            color: "var(--text-muted)",
-                        }}>
-                            {p.category}
-                        </span>
-                    </a>
-                ))}
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", padding: "0 0.25rem" }}>
+                                    <span style={{
+                                        fontSize: isFeature ? "clamp(1.5rem, 3vw, 2.2rem)" : "clamp(1.1rem, 2vw, 1.5rem)",
+                                        fontWeight: 700,
+                                        fontFamily: "'Sora', system-ui, sans-serif",
+                                        letterSpacing: "-0.02em",
+                                    }}>
+                                        {p.title}
+                                    </span>
+                                    <span style={{
+                                        fontSize: "0.8rem",
+                                        color: "var(--text-muted)",
+                                        letterSpacing: "0.04em",
+                                        textTransform: "uppercase",
+                                        flexShrink: 0,
+                                    }}>
+                                        {p.category}
+                                    </span>
+                                </div>
+                            </a>
+                        );
+                    })}
+                </div>
 
-                {/* GSAP optimized floating cursor card */}
+                {/* Floating cursor card (desktop only) */}
                 <div
                     ref={cursorRef}
                     style={{
                         position: "absolute",
                         top: 0,
                         left: 0,
-                        width: "300px",
+                        width: "280px",
                         background: "var(--bg-card)",
                         border: "1px solid var(--border-color)",
                         backdropFilter: "blur(16px)",
@@ -186,22 +238,15 @@ const WorkPage = () => {
                         boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
                         opacity: 0,
                         scale: 0.8,
-                        transformOrigin: "center center"
+                        transformOrigin: "center center",
                     }}
                 >
                     {hoveredProject !== null && projectsData[hoveredProject] && (
-                        <>
-                            <img
-                                src={projectsData[hoveredProject].image}
-                                alt={projectsData[hoveredProject].title}
-                                style={{ width: "100%", height: "160px", objectFit: "cover", display: "block" }}
-                            />
-                            <div style={{ padding: "1rem" }}>
-                                <p style={{ fontSize: "0.9rem", color: "var(--text)", fontWeight: 500, margin: 0, lineHeight: 1.5 }}>
-                                    {projectsData[hoveredProject].description}
-                                </p>
-                            </div>
-                        </>
+                        <div style={{ padding: "1rem" }}>
+                            <p style={{ fontSize: "0.85rem", color: "var(--text)", fontWeight: 500, margin: 0, lineHeight: 1.5 }}>
+                                {projectsData[hoveredProject].description}
+                            </p>
+                        </div>
                     )}
                 </div>
             </div>

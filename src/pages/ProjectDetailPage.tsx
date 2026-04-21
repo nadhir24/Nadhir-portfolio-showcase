@@ -177,14 +177,7 @@ const ProjectDetailPage = () => {
                 <div className="proj-line" style={{ height: "1px", background: "var(--border-color)", width: "100%", marginBottom: "3rem" }} />
 
                 {/* Content Grid */}
-                <div
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: "1fr 2fr",
-                        gap: "4rem",
-                        alignItems: "start",
-                    }}
-                >
+                <div className="proj-content-grid">
                     {/* Metadata (Left) */}
                     <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                         <div className="proj-meta-item" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>

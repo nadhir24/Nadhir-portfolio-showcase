@@ -95,9 +95,9 @@ const CustomCursor = () => {
                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
             />
             <style>{`
-        * {
-          cursor: none !important;
-        }
+        body { cursor: none; }
+        a, button, [role="button"] { cursor: pointer; }
+        input, textarea, select { cursor: text; }
       `}</style>
         </>
     );

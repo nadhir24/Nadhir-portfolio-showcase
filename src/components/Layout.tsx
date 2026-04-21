@@ -3,7 +3,8 @@ import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import CustomCursor from "@/components/CustomCursor";
-import { AnimatePresence } from "framer-motion";
+import Footer from "@/components/Footer";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Layout = () => {
     const [isDark, setIsDark] = useState(() => {
@@ -31,13 +32,23 @@ const Layout = () => {
             <CustomCursor />
             <AnimatedBlobs />
             <Navbar isDark={isDark} onToggleTheme={() => setIsDark((d) => !d)} />
-            <main>
+            <main id="main-content">
                 <AnimatePresence mode="wait">
-                    <div key={location.pathname}>
+                    <motion.div
+                        key={location.pathname}
+                        initial={{ opacity: 1 }}
+                        animate={{ opacity: 1 }}
+                        exit={{
+                            opacity: 0,
+                            y: -30,
+                            transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] },
+                        }}
+                    >
                         <Outlet />
-                    </div>
+                    </motion.div>
                 </AnimatePresence>
             </main>
+            <Footer />
         </div>
     );
 };
