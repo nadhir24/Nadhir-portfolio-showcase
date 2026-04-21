@@ -119,7 +119,7 @@ const WorkPage = () => {
                 padding: "7rem 2rem 4rem",
             }}
         >
-            <h1 className="sc-section-title" style={{ opacity: 0 }}>Selected Works</h1>
+            <h1 className="sc-section-title">Selected Works</h1>
 
             <div
                 style={{ position: "relative" }}
