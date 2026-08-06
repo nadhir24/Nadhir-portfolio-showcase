@@ -14,6 +14,7 @@ const WorkPage = lazy(() => import("./pages/WorkPage"));
 const ExperiencePage = lazy(() => import("./pages/ExperiencePage"));
 const CertificationsPage = lazy(() => import("./pages/CertificationsPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
+const PressKitPage = lazy(() => import("./pages/PressKitPage"));
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -41,6 +42,7 @@ const App = () => (
               <Route path="experience" element={<ExperiencePage />} />
               <Route path="certifications" element={<CertificationsPage />} />
               <Route path="contact" element={<ContactPage />} />
+              <Route path="djkit" element={<PressKitPage />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

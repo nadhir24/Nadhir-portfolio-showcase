@@ -14,6 +14,7 @@ const navLinks = [
   { name: "Experience", href: "/experience" },
   { name: "Certifications", href: "/certifications" },
   { name: "Contact", href: "/contact" },
+  { name: "Presskit", href: "/djkit" },
 ];
 
 const Navbar = ({ isDark, onToggleTheme }: NavbarProps) => {
